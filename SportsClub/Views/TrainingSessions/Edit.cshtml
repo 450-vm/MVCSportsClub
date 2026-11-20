@@ -1,0 +1,5 @@
+@model SessionInput
+@{ ViewData["Title"] = "Edit session"; }
+<div class="page-heading"><div><p class="eyebrow">KEEP THE PLAN MOVING</p><h1>Edit session.</h1></div></div>
+<form asp-action="Edit" asp-route-id="@ViewContext.RouteData.Values["id"]" method="post" class="surface form-panel"><partial name="_Fields" model="Model" /><div class="form-actions"><button class="btn btn-primary" type="submit">Save changes</button><a asp-action="Index" class="btn btn-outline-dark">Cancel</a></div></form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

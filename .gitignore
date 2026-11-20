@@ -1,0 +1,14 @@
+.dotnet/
+.cli/
+.nuget/
+**/bin/
+**/obj/
+**/TestResults/
+**/*.db
+**/*.db-shm
+**/*.db-wal
+**/*.db-journal
+.DS_Store
+.vs/
+.idea/
+*.user

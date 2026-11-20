@@ -1,0 +1,12 @@
+@model List<Trainer>
+@{ ViewData["Title"] = "Trainers"; }
+<div class="page-heading"><div><p class="eyebrow">THE PEOPLE WHO GUIDE US</p><h1>Meet your trainers.</h1><p class="page-intro">Manage the expertise behind every session.</p></div><a asp-action="Create" class="btn btn-primary">+ Add trainer</a></div>
+@if (Model.Count == 0)
+{ <div class="empty-state"><h2>Your team starts here</h2><p>Add your first trainer to start planning sessions.</p></div> }
+else
+{
+    <div class="table-responsive surface"><table class="table align-middle mb-0"><thead><tr><th scope="col">Trainer</th><th scope="col">Specialization</th><th scope="col">Email</th><th scope="col">Phone</th><th scope="col">Actions</th></tr></thead><tbody>
+    @foreach (var trainer in Model)
+    { <tr><td><a class="entity-link" asp-action="Details" asp-route-id="@trainer.Id">@trainer.FullName</a></td><td>@trainer.Specialization</td><td>@trainer.Email</td><td>@trainer.PhoneNumber</td><td class="text-nowrap"><a asp-action="Edit" asp-route-id="@trainer.Id" aria-label="Edit @trainer.FullName">Edit</a><span class="action-divider">/</span><a asp-action="Delete" asp-route-id="@trainer.Id" aria-label="Delete @trainer.FullName">Delete</a></td></tr> }
+    </tbody></table></div>
+}

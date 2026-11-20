@@ -1,0 +1,4 @@
+@model TrainingSession
+@{ ViewData["Title"] = "Delete session"; }
+<div class="page-heading"><div><p class="eyebrow">CONFIRM DELETION</p><h1>Delete @Model.Title?</h1></div></div>
+<div class="surface form-panel"><div asp-validation-summary="All" class="text-danger" role="alert"></div><p>This permanently removes the session on @ClubTime.Display(Model.StartDateTime) (Sofia) and all @Model.Enrollments.Count associated enrollment(s).</p><form asp-action="Delete" asp-route-id="@Model.Id" method="post"><div class="form-actions"><button class="btn btn-danger" type="submit">Delete session</button><a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-dark">Cancel</a></div></form></div>

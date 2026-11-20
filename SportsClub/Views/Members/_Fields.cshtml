@@ -1,0 +1,4 @@
+@model MemberInput
+<div asp-validation-summary="All" class="text-danger" role="alert"></div>
+<partial name="_PersonFields" model="Model" />
+<div class="mt-3"><label asp-for="JoinDate" class="form-label"></label><input asp-for="JoinDate" type="date" class="form-control" max="@ClubTime.Today.ToString("yyyy-MM-dd")" /><span asp-validation-for="JoinDate" class="text-danger"></span></div>

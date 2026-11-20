@@ -1,0 +1,2 @@
+@{ ViewData["Title"] = $"Error {ViewBag.Code}"; }
+<div class="empty-state"><p class="eyebrow">ERROR @ViewBag.Code</p><h1>@(ViewBag.Code == 404 ? "We couldn’t find that page." : "We couldn’t complete that request.")</h1><p>The page or record may have changed. Return home to continue.</p><a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back to home</a></div>

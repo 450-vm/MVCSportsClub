@@ -1,0 +1,24 @@
+@model TrainingSession
+@{
+    ViewData["Title"] = Model.Title;
+    var members = (List<SelectListItem>)ViewBag.Members;
+    var canEnroll = Model.AvailablePlaces > 0 && Model.StartDateTime > DateTime.UtcNow;
+}
+<div class="page-heading"><div><p class="eyebrow">YOUR NEXT MOVE</p><h1>@Model.Title</h1><p class="page-intro">@ClubTime.Display(Model.StartDateTime) · Sofia</p></div><div class="d-flex gap-2"><a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit session</a><a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a></div></div>
+<div class="row g-4"><div class="col-lg-7"><div class="surface p-4 h-100"><h2>About this session</h2><p class="session-description">@Model.Description</p><dl class="detail-list"><dt>Trainer</dt><dd><a asp-controller="Trainers" asp-action="Details" asp-route-id="@Model.TrainerId">@Model.Trainer.FullName</a></dd><dt>Duration</dt><dd>@Model.DurationMinutes minutes</dd><dt>Capacity</dt><dd>@Model.Enrollments.Count enrolled / @Model.Capacity total · @Model.AvailablePlaces places left</dd></dl></div></div>
+<div class="col-lg-5"><div class="surface p-4 h-100 enrollment-panel"><p class="eyebrow">SAVE A PLACE</p><h2>Enroll a member</h2>
+@if (!canEnroll)
+{ <p>@(Model.StartDateTime <= DateTime.UtcNow ? "Enrollment is closed. This session has already started." : "This session is full. Cancel an enrollment to free a place.")</p> }
+else if (members.Count == 0)
+{ <p>No unenrolled members are available.</p><a asp-controller="Members" asp-action="Create">Add a member →</a> }
+else
+{ <form asp-controller="Enrollments" asp-action="Create" method="post"><input type="hidden" name="sessionId" value="@Model.Id" /><label class="form-label" for="memberId">Member</label><select class="form-select" id="memberId" name="memberId" required><option value="">Choose a member</option>@foreach (var member in members) { <option value="@member.Value">@member.Text</option> }</select><button class="btn btn-primary mt-3" type="submit">Enroll member ↗</button></form> }
+</div></div></div>
+<section class="section-space"><div class="page-heading"><h2>Enrolled members <span class="count-label">@Model.Enrollments.Count</span></h2></div>
+@if (!Model.Enrollments.Any())
+{ <div class="empty-state"><h3>Be the first to join</h3><p>No members are enrolled in this session yet.</p></div> }
+else
+{ <div class="table-responsive surface"><table class="table align-middle mb-0"><thead><tr><th scope="col">Member</th><th scope="col">Email</th><th scope="col">Enrollment</th></tr></thead><tbody>@foreach (var enrollment in Model.Enrollments.OrderBy(x => x.Member.LastName))
+{ <tr><td><a class="entity-link" asp-controller="Members" asp-action="Details" asp-route-id="@enrollment.MemberId">@enrollment.Member.FullName</a></td><td>@enrollment.Member.Email</td><td><form asp-controller="Enrollments" asp-action="Cancel" method="post"><input type="hidden" name="sessionId" value="@Model.Id" /><input type="hidden" name="memberId" value="@enrollment.MemberId" /><button class="btn btn-sm btn-outline-danger" type="submit" aria-label="Cancel enrollment for @enrollment.Member.FullName">Cancel enrollment</button></form></td></tr> }
+</tbody></table></div> }
+</section><a asp-action="Schedule" class="back-link">← Back to schedule</a>

@@ -1,0 +1,12 @@
+@model List<TrainingSession>
+@{ ViewData["Title"] = "Home"; }
+<section class="hero">
+    <div class="hero-copy"><p class="eyebrow">YOUR CLUB. ALL TOGETHER.</p><h1>Good things<br />start with<br /><span>movement.</span></h1><p class="hero-description">Bring your people, trainers, and training sessions together. Less admin. More time doing what you love.</p><div class="d-flex gap-3 flex-wrap"><a class="btn btn-primary" asp-controller="TrainingSessions" asp-action="Schedule">Explore the schedule <span aria-hidden="true">↗</span></a><a class="btn btn-outline-dark" asp-controller="Members" asp-action="Create">Add a member</a></div></div>
+    <div class="hero-art" aria-hidden="true"><span class="art-label">MAKE ROOM<br />FOR YOUR NEXT MOVE.</span><div class="art-ring ring-one"></div><div class="art-ring ring-two"></div><div class="art-ball"></div><span class="art-bottom">STRONGER, TOGETHER. ↗</span></div>
+</section>
+<section class="stats-grid" aria-label="Club overview">
+    <a class="stat-card" asp-controller="Members" asp-action="Index"><span class="eyebrow">THE COMMUNITY</span><strong>@ViewBag.MemberCount</strong><span>Club members <span aria-hidden="true">↗</span></span></a>
+    <a class="stat-card" asp-controller="Trainers" asp-action="Index"><span class="eyebrow">THE GUIDANCE</span><strong>@ViewBag.TrainerCount</strong><span>Dedicated trainers <span aria-hidden="true">↗</span></span></a>
+    <a class="stat-card stat-highlight" asp-controller="TrainingSessions" asp-action="Create"><span class="eyebrow">THE NEXT CHAPTER</span><strong>Let’s go.</strong><span>Plan a new session <span aria-hidden="true">↗</span></span></a>
+</section>
+<section class="section-space"><div class="page-heading"><div><p class="eyebrow">ON THE HORIZON</p><h2>Your next sessions</h2></div><a asp-controller="TrainingSessions" asp-action="Schedule">Full schedule →</a></div><partial name="_SessionTable" model="Model" /></section>

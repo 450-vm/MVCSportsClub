@@ -1,0 +1,19 @@
+@model IEnumerable<TrainingSession>
+@if (!Model.Any())
+{
+    <div class="empty-state"><h3>No sessions here yet</h3><p>Create a training session to get the club moving.</p><a asp-controller="TrainingSessions" asp-action="Create" class="btn btn-primary">Create a session</a></div>
+}
+else
+{
+    <div class="table-responsive surface"><table class="table align-middle mb-0">
+        <thead><tr><th scope="col">Session</th><th scope="col">Trainer</th><th scope="col">When · Sofia</th><th scope="col">Duration</th><th scope="col">Places left</th><th scope="col"><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody>@foreach (var session in Model)
+        {
+            <tr><td><a class="entity-link" asp-controller="TrainingSessions" asp-action="Details" asp-route-id="@session.Id">@session.Title</a></td>
+                <td><a asp-controller="Trainers" asp-action="Details" asp-route-id="@session.TrainerId">@session.Trainer.FullName</a></td>
+                <td class="text-nowrap">@ClubTime.Display(session.StartDateTime)</td><td>@session.DurationMinutes min</td>
+                <td><span class="badge @(session.AvailablePlaces > 0 ? "badge-open" : "badge-full")">@(session.AvailablePlaces > 0 ? $"{session.AvailablePlaces} / {session.Capacity}" : "Full")</span></td>
+                <td><a asp-controller="TrainingSessions" asp-action="Details" asp-route-id="@session.Id" aria-label="View @session.Title">View →</a></td></tr>
+        }</tbody>
+    </table></div>
+}

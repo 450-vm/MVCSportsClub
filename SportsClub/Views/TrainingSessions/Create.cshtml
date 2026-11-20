@@ -1,0 +1,5 @@
+@model SessionInput
+@{ ViewData["Title"] = "Create session"; }
+<div class="page-heading"><div><p class="eyebrow">MAKE TIME FOR MOVEMENT</p><h1>Create a session.</h1></div></div>
+<form asp-action="Create" method="post" class="surface form-panel"><partial name="_Fields" model="Model" /><div class="form-actions"><button class="btn btn-primary" type="submit">Create session</button><a asp-action="Index" class="btn btn-outline-dark">Cancel</a></div></form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

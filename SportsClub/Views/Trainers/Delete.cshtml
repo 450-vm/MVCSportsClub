@@ -1,0 +1,9 @@
+@model Trainer
+@{ ViewData["Title"] = "Delete trainer"; }
+<div class="page-heading"><div><p class="eyebrow">CONFIRM DELETION</p><h1>Delete @Model.FullName?</h1></div></div>
+<div class="surface form-panel"><div asp-validation-summary="All" class="text-danger" role="alert"></div>
+@if (Model.TrainingSessions.Any())
+{ <p>This trainer has @Model.TrainingSessions.Count assigned session(s). Reassign or delete those sessions before deleting the trainer.</p><a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary">View trainer’s sessions</a> }
+else
+{ <p>This permanently removes the trainer’s record.</p><form asp-action="Delete" asp-route-id="@Model.Id" method="post"><div class="form-actions"><button class="btn btn-danger" type="submit">Delete trainer</button><a asp-action="Index" class="btn btn-outline-dark">Cancel</a></div></form> }
+</div>

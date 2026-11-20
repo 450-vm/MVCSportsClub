@@ -1,0 +1,15 @@
+@model Member
+@{ ViewData["Title"] = Model.FullName; }
+<div class="page-heading"><div><p class="eyebrow">MEMBER PROFILE</p><h1>@Model.FullName</h1><p class="page-intro">Part of the club since @Model.JoinDate.ToString("dd MMM yyyy")</p></div><div class="d-flex gap-2"><a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit member</a><a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a></div></div>
+<div class="surface p-4 mb-4"><dl class="detail-list mb-0"><dt>Email</dt><dd>@Model.Email</dd><dt>Phone</dt><dd>@Model.PhoneNumber</dd></dl></div>
+<div class="page-heading"><h2>Registered sessions</h2><a asp-controller="TrainingSessions" asp-action="Schedule">Find a session →</a></div>
+@if (!Model.Enrollments.Any())
+{ <div class="empty-state"><h3>A fresh start</h3><p>This member has no registered sessions. Open a session from the schedule to enroll them.</p></div> }
+else
+{
+    <div class="table-responsive surface"><table class="table align-middle mb-0"><thead><tr><th scope="col">Session</th><th scope="col">Trainer</th><th scope="col">When · Sofia</th><th scope="col">Enrollment</th></tr></thead><tbody>
+    @foreach (var enrollment in Model.Enrollments.OrderBy(x => x.TrainingSession.StartDateTime))
+    { <tr><td><a class="entity-link" asp-controller="TrainingSessions" asp-action="Details" asp-route-id="@enrollment.TrainingSessionId">@enrollment.TrainingSession.Title</a></td><td>@enrollment.TrainingSession.Trainer.FullName</td><td>@ClubTime.Display(enrollment.TrainingSession.StartDateTime)</td><td><form asp-controller="Enrollments" asp-action="Cancel" method="post"><input type="hidden" name="sessionId" value="@enrollment.TrainingSessionId" /><input type="hidden" name="memberId" value="@Model.Id" /><button type="submit" class="btn btn-sm btn-outline-danger" aria-label="Cancel enrollment in @enrollment.TrainingSession.Title">Cancel enrollment</button></form></td></tr> }
+    </tbody></table></div>
+}
+<a asp-action="Index" class="back-link">← All members</a>

@@ -1,0 +1,4 @@
+@model List<TrainingSession>
+@{ ViewData["Title"] = "Schedule"; }
+<div class="page-heading"><div><p class="eyebrow">FIND YOUR NEXT MOVE</p><h1>Coming up at the club.</h1><p class="page-intro">Upcoming sessions, in order. All times are local to Sofia.</p></div><a asp-action="Create" class="btn btn-primary">+ Create session</a></div>
+<partial name="_SessionTable" model="Model" />

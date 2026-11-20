@@ -1,0 +1,4 @@
+@model TrainerInput
+<div asp-validation-summary="All" class="text-danger" role="alert"></div>
+<partial name="_PersonFields" model="Model" />
+<div class="mt-3"><label asp-for="Specialization" class="form-label"></label><input asp-for="Specialization" class="form-control" /><span asp-validation-for="Specialization" class="text-danger"></span></div>

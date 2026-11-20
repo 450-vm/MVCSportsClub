@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SportsClub.Tests/SportsClub.Tests.csproj" />
+  <Project Path="SportsClub/SportsClub.csproj" />
+</Solution>
